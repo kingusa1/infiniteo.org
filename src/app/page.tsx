@@ -124,6 +124,7 @@ export default function HomePage() {
                 alt="Illustration of escaping operational drudgery through automation"
                 width={600}
                 height={400}
+                quality={85}
                 className="rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
                 data-ai-hint="process improvement"
               />

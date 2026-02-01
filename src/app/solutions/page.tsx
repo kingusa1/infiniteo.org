@@ -82,6 +82,8 @@ export default function SolutionsPage() {
                   alt={`Visual representation of ${solution.title}`}
                   width={500}
                   height={350}
+                  quality={85}
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="rounded-lg shadow-xl mx-auto hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
                   data-ai-hint={solution.imageHint}
                 />
@@ -91,7 +93,7 @@ export default function SolutionsPage() {
                   <solution.icon className="h-12 w-12 text-accent mb-4" />
                   <h2 className="text-3xl font-semibold text-primary mb-4">{solution.title}</h2>
                   <p className="text-lg text-foreground mb-6">{solution.summary}</p>
-                  
+
                   <h3 className="text-xl font-semibold text-primary mb-4">Core Benefits:</h3>
                   <div className="space-y-3 mb-6">
                     {solution.benefits.map((benefit, i) => (
@@ -101,14 +103,14 @@ export default function SolutionsPage() {
                       </div>
                     ))}
                   </div>
-                  
+
                   <p className="text-sm text-muted-foreground mb-1"><strong>Empowers:</strong> {solution.targetRoles}</p>
                 </div>
-                
-                <CallToAction 
-                  href={`/contact?solution=${solution.id.replace(/-services$/, '')}`} 
-                  icon={ArrowRight} 
-                  size="default" 
+
+                <CallToAction
+                  href={`/contact?solution=${solution.id.replace(/-services$/, '')}`}
+                  icon={ArrowRight}
+                  size="default"
                   className="mt-6 w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                   Consult on {solution.title.replace(/ Services$/, '')}

@@ -41,7 +41,7 @@ const impactStories = [
     image: "/Operations Leads.jpg",
     imageHint: "operations workflow"
   },
-   {
+  {
     role: "Business Professionals",
     icon: Briefcase,
     challenge: "Facing repetitive daily tasks, information silos between applications, and the need to coordinate multi-step processes that consume valuable time and energy, hindering focus on strategic work.",
@@ -71,8 +71,8 @@ export default function ImpactPage() {
 
         <div className="space-y-12 md:space-y-16">
           {impactStories.map((story, index) => (
-            <section 
-              key={story.role} 
+            <section
+              key={story.role}
               className="p-6 md:p-8 rounded-xl shadow-xl hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 overflow-hidden"
             >
               <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -82,6 +82,8 @@ export default function ImpactPage() {
                     alt={`Impact for ${story.role}`}
                     width={500}
                     height={350}
+                    quality={85}
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="rounded-lg shadow-xl mx-auto hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
                     data-ai-hint={story.imageHint}
                   />

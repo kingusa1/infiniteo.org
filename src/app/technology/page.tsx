@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BrainCircuit, Puzzle, Scale, ShieldCheck, Zap, Layers, Settings } from 'lucide-react'; 
+import { BrainCircuit, Puzzle, Scale, ShieldCheck, Zap, Layers, Settings } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Our Automation Approach',
@@ -11,27 +11,27 @@ export const metadata: Metadata = {
 
 const techAdvantages = [
   {
-    icon: Layers, 
+    icon: Layers,
     title: "Platform-Agnostic Expertise",
     description: "Our approach to automation is inherently flexible, integrating seamlessly with virtually any digital channel or existing software stack. This ensures broad compatibility and protects your investments."
   },
   {
-    icon: Settings, 
+    icon: Settings,
     title: "Intuitive Design Process",
     description: "An advanced methodology meticulously refined for performance, yet designed for intuitive collaboration. Powerful automation shouldn't require a steep learning curve for your team."
   },
   {
-    icon: Puzzle, 
+    icon: Puzzle,
     title: "Fully Custom Workflows",
     description: "Connect disparate systems effortlessly and let us design tailor-made automation sequences, from simple actions to complex multi-application routines, using the best available tools."
   },
   {
-    icon: ShieldCheck, 
+    icon: ShieldCheck,
     title: "Robust Security Practices",
     description: "We build workflows with enterprise-grade security protocols in mind, using secure tools to protect your sensitive data and ensure operational integrity, giving you complete peace of mind."
   },
   {
-    icon: Scale, 
+    icon: Scale,
     title: "Infinite Scalability in Services",
     description: "Whether a small team or a large enterprise, Infiniteo's automation services scale with your needs, handling increasing data volumes without compromising performance."
   },
@@ -62,6 +62,8 @@ export default function TechnologyPage() {
                 alt="Illustration of escaping operational drudgery through automation"
                 width={600}
                 height={450}
+                priority
+                quality={90}
                 className="rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
                 data-ai-hint="process improvement"
               />
@@ -101,13 +103,14 @@ export default function TechnologyPage() {
 
         <section className="mt-12 md:mt-20 text-center">
           <Image
-              src="/Future-Proof Your Operations with Our Services.png"
-              alt="Illustration of future-proof operations"
-              width={800}
-              height={300}
-              className="rounded-lg shadow-xl mx-auto mb-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-              data-ai-hint="future operations"
-            />
+            src="/Future-Proof Your Operations with Our Services.png"
+            alt="Illustration of future-proof operations"
+            width={800}
+            height={300}
+            quality={85}
+            className="rounded-lg shadow-xl mx-auto mb-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+            data-ai-hint="future operations"
+          />
           <h2 className="text-3xl font-semibold text-primary mb-4">Future-Proof Your Operations with Our Services</h2>
           <p className="text-lg text-foreground max-w-3xl mx-auto mb-8">
             With Infiniteo's services, you're not just automating tasks; you're building a resilient and adaptable operational foundation. Our commitment to reliability, security, scalability, and an evolving, future-proof service architecture ensures you can focus on strategic growth, confident that your automation infrastructure can handle whatever comes next.

@@ -22,7 +22,7 @@ const coreValues = [
     description: "Building robust, secure workflows using proven tools that clients trust to run flawlessly—every time, everywhere."
   },
   {
-    icon: UserRoundCog, 
+    icon: UserRoundCog,
     title: "Empowerment",
     description: "Equipping users with custom-built, intuitive automations and clear guidance, so they own their improved processes and achieve more with less effort."
   },
@@ -57,6 +57,7 @@ export default function AboutPage() {
                 alt="Our vision and mission illustrated"
                 width={600}
                 height={450}
+                quality={90}
                 className="rounded-lg shadow-xl"
                 data-ai-hint="vision mission"
               />
@@ -84,11 +85,11 @@ export default function AboutPage() {
             Infiniteo delivers truly limitless automation by combining a platform-agnostic methodology, fully custom workflows, and an intuitive client experience—empowering clients to automate any digital task, from social media publishing to complex multi-step processes, faster and more reliably than any competitor. We enable innovation, profound efficiency, and absolute peace of mind—without limits.
           </p>
         </section>
-        
+
         <section className="mb-12 md:mb-16">
           <h2 className="text-3xl font-semibold text-primary mb-10 text-center">Our Core Values</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {coreValues.slice(0, 3).map((value) => ( 
+            {coreValues.slice(0, 3).map((value) => (
               <Card key={value.title} className="shadow-lg text-center md:text-left hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-card">
                 <CardHeader className="items-center md:items-start">
                   <value.icon className="h-10 w-10 text-accent mb-3" />
@@ -100,8 +101,8 @@ export default function AboutPage() {
               </Card>
             ))}
           </div>
-          <div className="grid md:grid-cols-2 gap-8 mt-8 lg:max-w-[calc(66.66%-1rem)] lg:mx-auto"> 
-            {coreValues.slice(3).map((value) => ( 
+          <div className="grid md:grid-cols-2 gap-8 mt-8 lg:max-w-[calc(66.66%-1rem)] lg:mx-auto">
+            {coreValues.slice(3).map((value) => (
               <Card key={value.title} className="shadow-lg text-center md:text-left hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-card">
                 <CardHeader className="items-center md:items-start">
                   <value.icon className="h-10 w-10 text-accent mb-3" />
@@ -122,7 +123,7 @@ export default function AboutPage() {
             Partner with Infiniteo and transform your business operations. Let's build the future, together, where intelligent automation services meet infinity, and your business evolution knows no bounds.
           </p>
           <CallToAction href="/contact" variant="default" className="bg-accent text-accent-foreground border-accent hover:bg-accent/90">
-              Start Your Transformation
+            Start Your Transformation
           </CallToAction>
         </section>
       </div>
