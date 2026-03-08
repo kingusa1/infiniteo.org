@@ -25,7 +25,7 @@ async function sendEmailNotification(data: {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      sender: { name: 'Infiniteo Contact Form', email: 'no-reply@infiniteo.org' },
+      sender: { name: 'Infiniteo Contact Form', email: 'mohamedhisham735@gmail.com' },
       to: [{ email: CONTACT_EMAIL, name: 'Infiniteo Team' }],
       replyTo: { email: data.email, name: data.name },
       subject: `New Contact Form Submission from ${data.name} - ${data.company}`,
