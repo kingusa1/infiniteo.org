@@ -39,6 +39,9 @@ next-env.d.ts
 
 .genkit/*
 .env*
+service-account.json
+*service_account*.json
+autopost-*.json
 
 # firebase
 firebase-debug.log

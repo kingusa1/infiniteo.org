@@ -58,7 +58,7 @@ export default function TechnologyPage() {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <Image
-                src="/Accessible Power, Sophisticated Performance.png"
+                src="/accessible-power.png"
                 alt="Illustration of escaping operational drudgery through automation"
                 width={600}
                 height={450}
@@ -103,7 +103,7 @@ export default function TechnologyPage() {
 
         <section className="mt-12 md:mt-20 text-center">
           <Image
-            src="/Future-Proof Your Operations with Our Services.png"
+            src="/future-proof-operations.png"
             alt="Illustration of future-proof operations"
             width={800}
             height={300}

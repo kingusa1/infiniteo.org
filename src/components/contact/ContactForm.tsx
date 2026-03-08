@@ -16,11 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Loader2 } from "lucide-react"; // Changed icon
+import { Send, Loader2 } from "lucide-react";
 import { useState } from "react";
-// We still use ContactFormValues for type safety and schema definition.
-// The actual server action 'handleContactSubmission' won't be called.
-import type { ContactFormValues } from "@/app/contact/actions";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -40,6 +37,8 @@ const formSchema = z.object({
   }),
 });
 
+type ContactFormValues = z.infer<typeof formSchema>;
+
 export default function ContactForm() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,34 +57,33 @@ export default function ContactForm() {
   async function onSubmit(values: ContactFormValues) {
     setIsSubmitting(true);
 
-    const companyEmail = "infiniteo.tech@hotmail.com";
-    const subject = encodeURIComponent(`Infiniteo Contact Form: ${values.name} - ${values.company}`);
-    const body = encodeURIComponent(
-      `You have received a new message from the Infiniteo contact form:\n\n` +
-      `Name: ${values.name}\n` +
-      `Company: ${values.company}\n` +
-      `Email: ${values.email}\n` +
-      (values.phone ? `Phone: ${values.phone}\n` : '') +
-      `\nMessage:\n--------------------------------------------------\n${values.message}\n--------------------------------------------------`
-    );
-
-    const mailtoLink = `mailto:${companyEmail}?subject=${subject}&body=${body}`;
-
     try {
-      // Attempt to open the mail client
-      window.location.href = mailtoLink;
-
-      toast({
-        title: "Opening Email Client",
-        description: "Your default email application should open shortly with the pre-filled message.",
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values),
       });
-      form.reset(); // Reset form after attempting to open mail client
 
+      const result = await response.json();
+
+      if (result.success) {
+        toast({
+          title: "Message Sent Successfully!",
+          description: result.message,
+        });
+        form.reset();
+      } else {
+        toast({
+          title: "Submission Failed",
+          description: result.message || "Please try again later.",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
-      console.error("Failed to open mail client:", error);
+      console.error("Contact form error:", error);
       toast({
-        title: "Error Opening Email Client",
-        description: "Could not automatically open your email application. Please copy the details and send your message manually.",
+        title: "Connection Error",
+        description: "Could not send your message. Please check your connection and try again.",
         variant: "destructive",
       });
     } finally {
@@ -175,8 +173,8 @@ export default function ContactForm() {
             </>
           ) : (
             <>
-              <Mail className="mr-2 h-4 w-4" />
-              Prepare Email
+              <Send className="mr-2 h-4 w-4" />
+              Send Message
             </>
           )}
         </Button>

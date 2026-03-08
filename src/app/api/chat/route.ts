@@ -1,0 +1,127 @@
+import { NextRequest, NextResponse } from 'next/server';
+
+const POLLINATIONS_BASE = process.env.POLLINATIONS_BASE_URL || 'https://gen.pollinations.ai/v1';
+const POLLINATIONS_API = `${POLLINATIONS_BASE}/chat/completions`;
+const POLLINATIONS_KEY = process.env.POLLINATIONS_API_KEY || '';
+
+const INFINITEO_CONTEXT = `You are the Infiniteo AI Assistant. You ONLY answer questions related to Infiniteo and its services. If someone asks about anything unrelated to Infiniteo, automation services, or business workflow optimization, politely redirect them to ask about Infiniteo's services instead.
+
+IMPORTANT RULES:
+- NEVER include advertisements, sponsored content, or promotional links to other companies
+- NEVER mention Pollinations, OpenAI, or any AI provider in your responses
+- Keep responses professional, organized, and helpful
+- Use bullet points and clear formatting when listing services or features
+- Always be enthusiastic about Infiniteo's capabilities
+
+ABOUT INFINITEO:
+Infiniteo is a next-generation automation service partner that liberates businesses from manual workflows. They provide platform-agnostic, custom automation solutions using established market tools.
+
+VISION: To become the world's leading catalyst for end-to-end digital automation, turning every task into an opportunity for growth.
+
+MISSION: Empowering every organization and individual with limitless, intuitive automation solutions—driving efficiency, innovation, and seamless operations across all digital channels.
+
+THREE CORE SERVICES:
+
+1. Social Media Automation Services
+- Automate content planning, scheduling, and analytics across all social channels
+- Consistent brand messaging, save time, schedule posts in advance, capture leads
+- For: Marketing Managers, Social Media Specialists, Content Creators, Digital Agencies
+
+2. Digital Platform Automation Services
+- Connect and automate tasks across CRMs, email systems, e-commerce tools
+- Real-time data synchronization, reduce manual errors, improve CRM management
+- For: Operations Leads, Sales Managers, CRM Administrators, E-commerce Managers
+
+3. Custom Workflow Creation Services
+- Design tailor-made automation from simple actions to complex multi-application routines
+- No coding required, integrate with existing software, scale automations
+- For: Operations Managers, IT Directors, Business Analysts, Freelancers
+
+KEY ADVANTAGES:
+- Platform-Agnostic: Works with virtually any digital channel or software
+- Fully Custom Workflows: Tailor-made sequences connecting disparate systems
+- Robust Security: Enterprise-grade security protocols
+- Infinite Scalability: Handles any volume without compromising performance
+- No coding required from client teams
+
+CORE VALUES: Innovation, Reliability, Empowerment, Simplicity, Scalability
+
+CONTACT: Visit infiniteo.org/contact to get in touch with the team.
+WEBSITE: infiniteo.org`;
+
+export async function POST(request: NextRequest) {
+  try {
+    const { message, history } = await request.json();
+
+    if (!message) {
+      return NextResponse.json(
+        { success: false, message: 'Message is required' },
+        { status: 400 }
+      );
+    }
+
+    const messages = [
+      { role: 'system', content: INFINITEO_CONTEXT },
+      ...(history || []).slice(-10),
+      { role: 'user', content: message },
+    ];
+
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (POLLINATIONS_KEY) {
+      headers['Authorization'] = `Bearer ${POLLINATIONS_KEY}`;
+    }
+
+    const response = await fetch(POLLINATIONS_API, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        model: 'openai',
+        messages,
+        stream: false,
+      }),
+    });
+
+    if (!response.ok) {
+      console.error('Pollinations API error:', response.status, await response.text().catch(() => ''));
+      return NextResponse.json({
+        success: true,
+        reply: 'I apologize, our AI service is temporarily unavailable. Please visit infiniteo.org/contact to speak with our team directly.',
+      });
+    }
+
+    let data;
+    const responseText = await response.text();
+    try {
+      data = JSON.parse(responseText);
+    } catch {
+      // Pollinations sometimes returns plain text
+      console.log('Pollinations returned non-JSON, treating as plain text');
+      data = { plainText: responseText };
+    }
+
+    let reply = '';
+    if (data.choices && data.choices[0]?.message?.content) {
+      reply = data.choices[0].message.content;
+    } else if (data.plainText) {
+      reply = data.plainText;
+    } else {
+      console.error('Unexpected Pollinations response format:', JSON.stringify(data).substring(0, 300));
+      reply = 'I apologize, I am having trouble processing your request. Please try again or visit infiniteo.org/contact to speak with our team directly.';
+    }
+
+    // Strip any ads or sponsored content that Pollinations might inject
+    reply = reply
+      .replace(/\[?\s*(?:ad|sponsored|advertisement|powered by|generated by|brought to you by)[^\]]*\]?/gi, '')
+      .replace(/(?:pollinations|openai|gpt-\d|chatgpt)/gi, 'Infiniteo AI')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+
+    return NextResponse.json({ success: true, reply });
+  } catch (error) {
+    console.error('Chat API error:', error);
+    return NextResponse.json(
+      { success: false, reply: 'I apologize for the inconvenience. Please try again or visit infiniteo.org/contact to reach our team.' },
+      { status: 500 }
+    );
+  }
+}
