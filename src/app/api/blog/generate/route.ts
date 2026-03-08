@@ -135,9 +135,9 @@ Respond in this exact JSON format (no markdown code blocks, just raw JSON):
   const slug = slugify(parsed.title || topic);
 
   const imagePrompt = encodeURIComponent(
-    `Professional business automation technology illustration, ${parsed.title}, modern minimalist, dark blue and teal color scheme, corporate style`
+    `Realistic high-quality photograph, ${parsed.title}, modern office environment, professional business setting, cinematic lighting, photorealistic, no text, no words, no letters, no watermarks, no logos, ultra detailed, 8k`
   );
-  const imageUrl = `https://image.pollinations.ai/prompt/${imagePrompt}?width=800&height=400&nologo=true`;
+  const imageUrl = `https://image.pollinations.ai/prompt/${imagePrompt}?width=800&height=400&nologo=true&nofeed=true`;
 
   return {
     slug,
